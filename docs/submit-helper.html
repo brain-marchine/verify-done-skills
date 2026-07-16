@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>verify-done 一键发帖助手</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 820px; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+    textarea { width: 100%; min-height: 160px; font-family: ui-monospace, monospace; font-size: 13px; }
+    button, a.btn { display: inline-block; margin: 0.35rem 0.35rem 0.35rem 0; padding: 0.55rem 0.9rem; background: #2563eb; color: #fff; border: 0; border-radius: 8px; text-decoration: none; cursor: pointer; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 1rem; margin: 1rem 0; }
+    h1 { font-size: 1.35rem; }
+    .ok { color: #15803d; }
+  </style>
+</head>
+<body>
+  <h1>verify-done 推流助手</h1>
+  <p>仓库已上线：<a href="https://github.com/brain-marchine/verify-done-skills" target="_blank">brain-marchine/verify-done-skills</a></p>
+  <p>点按钮会<strong>复制文案并打开发帖页</strong>。你只需在打开的页面粘贴（Ctrl+V）并提交。</p>
+
+  <div class="card">
+    <h2>1. Show HN（最重要）</h2>
+    <p>标题：</p>
+    <textarea id="hnTitle">Show HN: verify-done – agent skills that refuse Fake Done</textarea>
+    <p>正文：</p>
+    <textarea id="hnBody">I kept hitting Fake Done with Cursor / Claude Code:
+
+  "Done. Fixed." → open the UI → still broken.
+
+I first shipped this as a CLI (Skeptic). The name was hard to find and
+a zero-follower repo basically got zero discovery.
+
+So I rebuilt the same gate as an Agent Skill:
+
+  npx skills add brain-marchine/verify-done-skills
+
+Paste "Use verify-done… I fixed …" into chat. The skill runs bundled
+scripts (git / vacuous-test scan / npm test / optional URL probe) and
+reports FAIL or PASS before Done is allowed.
+
+GIF + copy-paste quickstart:
+https://github.com/brain-marchine/verify-done-skills
+https://github.com/brain-marchine/verify-done-skills/blob/main/docs/QUICKSTART.md
+
+What checks do you wish agents were forced to pass before saying done?</textarea>
+    <button onclick="go('hnTitle','https://news.ycombinator.com/submit')">复制标题并打开 HN</button>
+    <button onclick="go('hnBody')">只复制正文</button>
+  </div>
+
+  <div class="card">
+    <h2>2. Reddit r/Cursor</h2>
+    <textarea id="redditTitle">I made an agent skill that blocks “Done” until checks FAIL/PASS in chat</textarea>
+    <textarea id="redditBody">Fake Done loop: agent says Fixed → tests "pass" → you open the app → still broken.
+
+I packaged an anti–Fake Done gate as an Agent Skill (not another heavy CLI):
+
+Install:
+npx skills add brain-marchine/verify-done-skills
+
+Then paste:
+"Use the verify-done skill. I fixed …. Verify before Done."
+
+It runs git / fake-test / npm test / optional URL probe and answers FAIL or PASS in chat.
+
+Repo + 5-min commands:
+https://github.com/brain-marchine/verify-done-skills
+
+Do you also get fake Done messages? What usually lies — UI, empty tests, or silent no-diff?</textarea>
+    <button onclick="go('redditTitle','https://www.reddit.com/r/Cursor/submit')">复制标题并打开 r/Cursor</button>
+    <button onclick="go('redditBody')">复制正文</button>
+  </div>
+
+  <div class="card">
+    <h2>3. V2EX</h2>
+    <textarea id="v2Title">开源了一个 Agent Skill：拦住「做完了」直到验收 FAIL/PASS（防 Fake Done）</textarea>
+    <textarea id="v2Body">用 Cursor / Claude Code 时经常遇到：
+
+Agent：「Done. Fixed.」
+打开页面：还是坏的。
+
+我做成了可安装的 Agent Skill（轻安装、对话里见效）：
+
+npx skills add brain-marchine/verify-done-skills
+
+聊天里贴一句「请使用 verify-done … 验收后再说做完了」，
+它会跑 git / 空测试扫描 / npm test / 可选 URL 探测，在对话里给 FAIL 或 PASS。
+
+仓库 + 逐步指令（含 Windows）：
+https://github.com/brain-marchine/verify-done-skills
+https://github.com/brain-marchine/verify-done-skills/blob/main/docs/QUICKSTART.md
+
+求拍：你们被 Fake Done 坑得最多的是 UI、假测试，还是根本没改文件？</textarea>
+    <button onclick="go('v2Title','https://www.v2ex.com/new')">复制标题并打开 V2EX</button>
+    <button onclick="go('v2Body')">复制正文</button>
+  </div>
+
+  <div class="card">
+    <h2>已自动提交的 GitHub PR</h2>
+    <ul>
+      <li><a href="https://github.com/philipbankier/awesome-agent-skills/pull/39" target="_blank">philipbankier/awesome-agent-skills#39</a></li>
+    </ul>
+  </div>
+
+  <p id="status" class="ok"></p>
+  <script>
+    async function go(id, url) {
+      const t = document.getElementById(id).value;
+      await navigator.clipboard.writeText(t);
+      document.getElementById('status').textContent = '已复制到剪贴板';
+      if (url) window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
