@@ -1,0 +1,6 @@
+node_modules/
+.verify-done/
+.DS_Store
+*.log
+examples/demo-app/.cursor/
+examples/demo-app/.claude/

@@ -1,0 +1,12 @@
+{
+  "name": "verify-done-demo-app",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Intentionally broken UI so verify-done can demonstrate FAIL",
+  "scripts": {
+    "start": "npx --yes serve public -l 4173",
+    "fix:ui": "node scripts/fix-ui.mjs",
+    "break:ui": "node scripts/break-ui.mjs",
+    "test": "node scripts/assert-still-broken.mjs"
+  }
+}
